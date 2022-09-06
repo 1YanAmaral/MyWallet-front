@@ -9,11 +9,13 @@ import {
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function SignUp() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
+    name: "",
     email: "",
     password: "",
+    confirm_password: "",
   });
 
   function handleForm(e) {
@@ -24,17 +26,6 @@ export default function Login() {
     console.log(form);
   }
 
-  /* function sendLogin(e) {
-    e.preventDefault();
-
-    //const promise = signup(form);
-    promise.then((res) => {
-      console.log("FOI", res);
-
-      navigate("/");
-    });
-    promise.catch(() => alert("Algo está errado, verifique suas informações!"));
-  } */
   return (
     <>
       <Content>
@@ -43,6 +34,14 @@ export default function Login() {
 
           <form onSubmit={() => {}}>
             <Wrapper>
+              <Info
+                type="text"
+                placeholder="Nome"
+                name="name"
+                onChange={handleForm}
+                value={form.name}
+                required
+              />
               <Info
                 type="email"
                 placeholder="E-mail"
@@ -59,12 +58,20 @@ export default function Login() {
                 value={form.password}
                 required
               />
+              <Info
+                type="password"
+                placeholder="Confirme a senha"
+                name="password"
+                onChange={handleForm}
+                value={form.confirm_password}
+                required
+              />
 
-              <Bigbutton type="submit">Entrar</Bigbutton>
+              <Bigbutton type="submit">Cadastrar</Bigbutton>
             </Wrapper>
           </form>
           <SpanLink>
-            <Link to="/cadastro">Primeira vez? Cadastre-se!</Link>
+            <Link to="/">Já tem uma conta? Entre agora!</Link>
           </SpanLink>
         </Wrapper>
       </Content>

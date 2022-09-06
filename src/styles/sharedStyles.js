@@ -64,6 +64,7 @@ const Bigbutton = styled.button`
   font-size: 20.976px;
   color: #ffffff;
   border: none;
+  margin-top: 5px;
 `;
 const SpanLink = styled.span`
   font-family: "Raleway", sans-serif;
