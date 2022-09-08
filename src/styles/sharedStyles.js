@@ -13,6 +13,24 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  ion-icon {
+    font-size: 35px;
+    font-weight: 700;
+  }
+`;
+
+const WrapperLine = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90vw;
+  margin-top: 20px;
+
+  ion-icon {
+    font-size: 35px;
+    font-weight: 700;
+  }
 `;
 
 const Logo = styled.div`
@@ -77,4 +95,26 @@ const SpanLink = styled.span`
   margin: 25px;
 `;
 
-export { Content, Wrapper, Logo, Info, Bigbutton, SpanLink };
+const PageTitle = styled.div`
+  display: flex;
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 26px;
+  color: #ffffff;
+  margin: 25px auto;
+  justify-content: space-between;
+  align-items: center;
+  width: 90vw;
+`;
+
+export {
+  Content,
+  Wrapper,
+  Logo,
+  Info,
+  Bigbutton,
+  SpanLink,
+  PageTitle,
+  WrapperLine,
+};
