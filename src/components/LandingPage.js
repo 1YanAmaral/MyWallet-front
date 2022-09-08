@@ -19,14 +19,37 @@ export default function LandingPage() {
           <ion-icon name="log-out-outline"></ion-icon>
         </Wrapper>
       </PageTitle>
-      <Transactions></Transactions>
+      <Transactions>
+        <EntryLine>
+          <EntryDate>30/11</EntryDate>
+          <EntryType>Almoço</EntryType>
+          <EntryValue>39,90</EntryValue>
+        </EntryLine>
+        <EntryLine>
+          <EntryDate>30/11</EntryDate>
+          <EntryType>Almoço</EntryType>
+          <EntryValue>39,90</EntryValue>
+        </EntryLine>
+        <EntryLine>
+          <EntryDate>30/11</EntryDate>
+          <EntryType>Almoço</EntryType>
+          <EntryValue>39,90</EntryValue>
+        </EntryLine>
+        <EntryLine>
+          <EntryDate>30/11</EntryDate>
+          <EntryType>Almoço</EntryType>
+          <EntryValue>39,90</EntryValue>
+        </EntryLine>
+      </Transactions>
       <WrapperLine>
-        <Entry>
-          <ion-icon name="add-circle-outline"></ion-icon>Nova Entrada
-        </Entry>
-        <Entry>
-          <ion-icon name="remove-circle-outline"></ion-icon>Nova Saída
-        </Entry>
+        <EntryButton>
+          <ion-icon name="add-circle-outline"></ion-icon>
+          <EntryType>Nova entrada</EntryType>
+        </EntryButton>
+        <EntryButton>
+          <ion-icon name="remove-circle-outline"></ion-icon>
+          <EntryType>Nova saída</EntryType>
+        </EntryButton>
       </WrapperLine>
     </Wrapper>
   );
@@ -39,9 +62,10 @@ const Transactions = styled.div`
   height: 445px;
   background-color: white;
   border-radius: 5px;
+  padding-top: 15px;
 `;
 
-const Entry = styled.div`
+const EntryButton = styled.div`
   width: 155px;
   height: 114px;
   background-color: #a328d6;
@@ -50,8 +74,47 @@ const Entry = styled.div`
   flex-direction: column;
   align-items: right;
   justify-content: space-between;
-  padding: 5px;
+  padding: 10px;
   color: #ffffff;
   font-family: "Raleway", sans-serif;
   font-weight: 700;
+`;
+
+const EntryType = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 30px;
+  line-height: 20px;
+`;
+
+const EntryLine = styled.div`
+  display: flex;
+  align-items: center;
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  margin: 5px auto;
+  width: 80vw;
+  position: relative;
+`;
+
+const EntryDate = styled.div`
+  display: flex;
+  align-items: center;
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #c6c6c6;
+  margin-right: 7px;
+`;
+
+const EntryValue = styled.div`
+  display: flex;
+  align-items: center;
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #03ac00;
+  position: fixed;
+  right: 7vw;
 `;
