@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Wrapper,
   WrapperLine,
@@ -44,11 +45,15 @@ export default function LandingPage() {
       <WrapperLine>
         <EntryButton>
           <ion-icon name="add-circle-outline"></ion-icon>
-          <EntryType>Nova entrada</EntryType>
+          <Link to="/entrada">
+            <EntryType>Nova entrada</EntryType>
+          </Link>
         </EntryButton>
         <EntryButton>
           <ion-icon name="remove-circle-outline"></ion-icon>
-          <EntryType>Nova saída</EntryType>
+          <Link to="/saida">
+            <EntryType>Nova saida</EntryType>
+          </Link>
         </EntryButton>
       </WrapperLine>
     </Wrapper>
