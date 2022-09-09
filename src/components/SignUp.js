@@ -8,6 +8,7 @@ import {
 } from "../styles/sharedStyles";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { signup } from "../services/mywalletServices";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -26,13 +27,23 @@ export default function SignUp() {
     console.log(form);
   }
 
+  function sendSignUp(e) {
+    e.preventDefault();
+    const promise = signup(form);
+    promise.then((res) => {
+      console.log("FOI", res);
+      navigate("/");
+    });
+    promise.catch(() => alert("Algo está errado, verifique suas informações!"));
+  }
+
   return (
     <>
       <Content>
         <Wrapper>
           <Logo>MyWallet</Logo>
 
-          <form onSubmit={() => {}}>
+          <form onSubmit={sendSignUp}>
             <Wrapper>
               <Info
                 type="text"
@@ -61,7 +72,7 @@ export default function SignUp() {
               <Info
                 type="password"
                 placeholder="Confirme a senha"
-                name="password"
+                name="confirm_password"
                 onChange={handleForm}
                 value={form.confirm_password}
                 required

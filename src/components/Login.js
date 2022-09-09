@@ -8,9 +8,11 @@ import {
 } from "../styles/sharedStyles";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { login } from "../services/mywalletServices";
 
 export default function Login() {
   const navigate = useNavigate();
+  const [token, setToken] = useState("");
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -24,24 +26,28 @@ export default function Login() {
     console.log(form);
   }
 
-  /* function sendLogin(e) {
+  function sendLogin(e) {
     e.preventDefault();
-
-    //const promise = signup(form);
-    promise.then((res) => {
-      console.log("FOI", res);
-
-      navigate("/");
-    });
-    promise.catch(() => alert("Algo está errado, verifique suas informações!"));
-  } */
+    const promise = login(form);
+    promise
+      .then((res) => {
+        //setUser(res.data);
+        setToken(res.data);
+        console.log(res.data);
+        navigate("/inicio");
+      })
+      .catch((res) => {
+        //alert(res.response.data.message);
+        alert("Algo está errado, verifique suas informações!");
+      });
+  }
   return (
     <>
       <Content>
         <Wrapper>
           <Logo>MyWallet</Logo>
 
-          <form onSubmit={() => {}}>
+          <form onSubmit={sendLogin}>
             <Wrapper>
               <Info
                 type="email"
