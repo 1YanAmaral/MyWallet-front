@@ -23,4 +23,9 @@ function createHeader(token) {
   return config;
 }
 
-export { login, signup, createHeader };
+function getTransactions(config) {
+  const promise = axios.get(`${BASE_URL}/transactions`, config);
+  return promise;
+}
+
+export { login, signup, createHeader, getTransactions };

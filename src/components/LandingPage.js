@@ -1,46 +1,58 @@
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Wrapper,
   WrapperLine,
-  Logo,
-  Info,
-  Bigbutton,
-  Content,
-  SpanLink,
   PageTitle,
+  Content,
 } from "../styles/sharedStyles";
+import UserContext from "./context/UserContext";
+import LoginContext from "./context/LoginContext";
+import { getTransactions, createHeader } from "../services/mywalletServices";
 
 export default function LandingPage() {
+  const { user } = useContext(UserContext);
+  const { token } = useContext(LoginContext);
+  const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    const promise = getTransactions(createHeader(token));
+    promise
+      .then((res) => {
+        setTransactions(res.data);
+        console.log(token);
+        console.log(res.data);
+      })
+      .catch(() => alert("!"));
+  }, []);
+
   return (
     <Wrapper>
       <PageTitle>
-        Olá, Fulano
+        Olá, {user.name}
         <Wrapper>
           <ion-icon name="log-out-outline"></ion-icon>
         </Wrapper>
       </PageTitle>
       <Transactions>
-        <EntryLine>
-          <EntryDate>30/11</EntryDate>
-          <EntryType>Almoço</EntryType>
-          <EntryValue>39,90</EntryValue>
-        </EntryLine>
-        <EntryLine>
-          <EntryDate>30/11</EntryDate>
-          <EntryType>Almoço</EntryType>
-          <EntryValue>39,90</EntryValue>
-        </EntryLine>
-        <EntryLine>
-          <EntryDate>30/11</EntryDate>
-          <EntryType>Almoço</EntryType>
-          <EntryValue>39,90</EntryValue>
-        </EntryLine>
-        <EntryLine>
-          <EntryDate>30/11</EntryDate>
-          <EntryType>Almoço</EntryType>
-          <EntryValue>39,90</EntryValue>
-        </EntryLine>
+        {transactions.length !== 0 ? (
+          transactions.map((value) => (
+            <EntryLine>
+              <EntryDate>{value.date}</EntryDate>
+              <EntryType>{value.description}</EntryType>
+              {value.type === "credit" ? (
+                <PositiveEntryValue>{value.amount}</PositiveEntryValue>
+              ) : (
+                <NegativeEntryValue>{value.amount}</NegativeEntryValue>
+              )}
+            </EntryLine>
+          ))
+        ) : (
+          <Empty>
+            <EmptyMsg>Não há registros de entrada ou saída</EmptyMsg>
+          </Empty>
+        )}
       </Transactions>
       <WrapperLine>
         <EntryButton>
@@ -113,7 +125,7 @@ const EntryDate = styled.div`
   margin-right: 7px;
 `;
 
-const EntryValue = styled.div`
+const PositiveEntryValue = styled.div`
   display: flex;
   align-items: center;
   font-family: "Raleway", sans-serif;
@@ -122,4 +134,33 @@ const EntryValue = styled.div`
   color: #03ac00;
   position: fixed;
   right: 7vw;
+`;
+
+const NegativeEntryValue = styled.div`
+  display: flex;
+  align-items: center;
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #03ac00;
+  position: fixed;
+  right: 7vw;
+`;
+
+const Empty = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90vw;
+  height: 445px;
+`;
+const EmptyMsg = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #868686;
+  font-size: 20px;
+  width: 50vw;
 `;

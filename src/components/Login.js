@@ -6,13 +6,16 @@ import {
   Content,
   SpanLink,
 } from "../styles/sharedStyles";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../services/mywalletServices";
+import UserContext from "./context/UserContext";
+import LoginContext from "./context/LoginContext";
 
 export default function Login() {
   const navigate = useNavigate();
-  const [token, setToken] = useState("");
+  const { setToken } = useContext(LoginContext);
+  const { setUser } = useContext(UserContext);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -31,9 +34,10 @@ export default function Login() {
     const promise = login(form);
     promise
       .then((res) => {
-        //setUser(res.data);
-        setToken(res.data);
-        console.log(res.data);
+        setUser(res.data.user);
+        setToken(res.data.token);
+        console.log(res.data.user);
+        console.log(res.data.token);
         navigate("/inicio");
       })
       .catch((res) => {
