@@ -40,7 +40,7 @@ export default function LandingPage() {
     });
 
     let totalBalance = totalCredit - totalDebit;
-    return totalBalance.toPrecision(4);
+    return totalBalance.toFixed(2);
   }
 
   return (
@@ -48,7 +48,9 @@ export default function LandingPage() {
       <PageTitle>
         Olá, {user.name}
         <Wrapper>
-          <ion-icon name="log-out-outline"></ion-icon>
+          <Link to="/">
+            <ion-icon name="log-out-outline"></ion-icon>
+          </Link>
         </Wrapper>
       </PageTitle>
       <Transactions>
@@ -74,18 +76,18 @@ export default function LandingPage() {
         )}
       </Transactions>
       <WrapperLine>
-        <EntryButton>
-          <ion-icon name="add-circle-outline"></ion-icon>
-          <Link to="/entrada">
+        <Link to="/entrada">
+          <EntryButton>
+            <ion-icon name="add-circle-outline"></ion-icon>
             <EntryType>Nova entrada</EntryType>
-          </Link>
-        </EntryButton>
-        <EntryButton>
-          <ion-icon name="remove-circle-outline"></ion-icon>
-          <Link to="/saida">
+          </EntryButton>
+        </Link>
+        <Link to="/saida">
+          <EntryButton>
+            <ion-icon name="remove-circle-outline"></ion-icon>
             <EntryType>Nova saida</EntryType>
-          </Link>
-        </EntryButton>
+          </EntryButton>
+        </Link>
       </WrapperLine>
     </Wrapper>
   );
