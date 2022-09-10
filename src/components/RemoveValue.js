@@ -1,18 +1,15 @@
-import {
-  Wrapper,
-  Logo,
-  Info,
-  Bigbutton,
-  Content,
-  SpanLink,
-  PageTitle,
-} from "../styles/sharedStyles";
-import { useState } from "react";
+import { Wrapper, Info, Bigbutton, PageTitle } from "../styles/sharedStyles";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import LoginContext from "./context/LoginContext";
+import { debitValue, createHeader } from "../services/mywalletServices";
 
-export default function AddValue() {
+export default function RemoveValue() {
+  const navigate = useNavigate();
+  const { token } = useContext(LoginContext);
   const [form, setForm] = useState({
     amount: "",
-    type: "",
+    description: "",
   });
 
   function handleForm(e) {
@@ -23,13 +20,26 @@ export default function AddValue() {
     console.log(form);
   }
 
+  function debitTransaction(e) {
+    e.preventDefault();
+    const promise = debitValue(form, createHeader(token));
+    promise
+      .then((res) => {
+        navigate("/inicio");
+      })
+      .catch((res) => {
+        //alert(res.response.data.message);
+        alert("Algo está errado, verifique suas informações!");
+      });
+  }
+
   return (
     <Wrapper>
-      <PageTitle>Nova saída</PageTitle>
-      <form onSubmit={() => {}}>
+      <PageTitle>Nova entrada</PageTitle>
+      <form onSubmit={debitTransaction}>
         <Wrapper>
           <Info
-            type="text"
+            type="number"
             placeholder="Valor"
             name="amount"
             onChange={handleForm}
@@ -39,9 +49,9 @@ export default function AddValue() {
           <Info
             type="text"
             placeholder="Descrição"
-            name="type"
+            name="description"
             onChange={handleForm}
-            value={form.type}
+            value={form.description}
             required
           />
 

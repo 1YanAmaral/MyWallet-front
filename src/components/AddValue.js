@@ -7,12 +7,17 @@ import {
   SpanLink,
   PageTitle,
 } from "../styles/sharedStyles";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { creditValue, createHeader } from "../services/mywalletServices";
+import { useNavigate } from "react-router-dom";
+import LoginContext from "./context/LoginContext";
 
 export default function AddValue() {
+  const navigate = useNavigate();
+  const { token } = useContext(LoginContext);
   const [form, setForm] = useState({
     amount: "",
-    type: "",
+    description: "",
   });
 
   function handleForm(e) {
@@ -23,13 +28,26 @@ export default function AddValue() {
     console.log(form);
   }
 
+  function creditTransaction(e) {
+    e.preventDefault();
+    const promise = creditValue(form, createHeader(token));
+    promise
+      .then((res) => {
+        navigate("/inicio");
+      })
+      .catch((res) => {
+        //alert(res.response.data.message);
+        alert("Algo está errado, verifique suas informações!");
+      });
+  }
+
   return (
     <Wrapper>
       <PageTitle>Nova entrada</PageTitle>
-      <form onSubmit={() => {}}>
+      <form onSubmit={creditTransaction}>
         <Wrapper>
           <Info
-            type="text"
+            type="number"
             placeholder="Valor"
             name="amount"
             onChange={handleForm}
@@ -39,9 +57,9 @@ export default function AddValue() {
           <Info
             type="text"
             placeholder="Descrição"
-            name="type"
+            name="description"
             onChange={handleForm}
-            value={form.type}
+            value={form.description}
             required
           />
 

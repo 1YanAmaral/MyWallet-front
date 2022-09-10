@@ -27,6 +27,22 @@ export default function LandingPage() {
       .catch(() => alert("!"));
   }, []);
 
+  function checkBalance() {
+    let totalCredit = 0;
+    let totalDebit = 0;
+
+    transactions.forEach((value) => {
+      if (value.type === "credit") {
+        totalCredit += Number(value.amount);
+      } else {
+        totalDebit += Number(value.amount);
+      }
+    });
+
+    let totalBalance = totalCredit - totalDebit;
+    return totalBalance.toPrecision(4);
+  }
+
   return (
     <Wrapper>
       <PageTitle>
@@ -46,6 +62,9 @@ export default function LandingPage() {
               ) : (
                 <NegativeEntryValue>{value.amount}</NegativeEntryValue>
               )}
+              <BalanceLine>
+                SALDO <BalanceValue>{checkBalance()}</BalanceValue>
+              </BalanceLine>
             </EntryLine>
           ))
         ) : (
@@ -80,6 +99,7 @@ const Transactions = styled.div`
   background-color: white;
   border-radius: 5px;
   padding-top: 15px;
+  position: relative;
 `;
 
 const EntryButton = styled.div`
@@ -100,7 +120,6 @@ const EntryButton = styled.div`
 const EntryType = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: 30px;
   line-height: 20px;
 `;
 
@@ -142,7 +161,7 @@ const NegativeEntryValue = styled.div`
   font-family: "Raleway", sans-serif;
   font-weight: 400;
   font-size: 16px;
-  color: #03ac00;
+  color: #c70000;
   position: fixed;
   right: 7vw;
 `;
@@ -163,4 +182,27 @@ const EmptyMsg = styled.div`
   color: #868686;
   font-size: 20px;
   width: 50vw;
+`;
+
+const BalanceLine = styled.div`
+  display: flex;
+  align-items: center;
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: #000000;
+  position: fixed;
+  left: 10vw;
+  bottom: 85vw;
+`;
+
+const BalanceValue = styled.div`
+  display: flex;
+  align-items: center;
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #03ac00;
+  position: fixed;
+  right: 7vw;
 `;

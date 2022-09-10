@@ -28,4 +28,21 @@ function getTransactions(config) {
   return promise;
 }
 
-export { login, signup, createHeader, getTransactions };
+function creditValue(body, config) {
+  const promise = axios.post(`${BASE_URL}/credit`, body, config);
+  return promise;
+}
+
+function debitValue(body, config) {
+  const promise = axios.post(`${BASE_URL}/debit`, body, config);
+  return promise;
+}
+
+export {
+  login,
+  signup,
+  createHeader,
+  getTransactions,
+  creditValue,
+  debitValue,
+};
