@@ -1,12 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import {
-  Wrapper,
-  WrapperLine,
-  PageTitle,
-  Content,
-} from "../styles/sharedStyles";
+import { Wrapper, WrapperLine, PageTitle } from "../styles/sharedStyles";
 import UserContext from "./context/UserContext";
 import LoginContext from "./context/LoginContext";
 import { getTransactions, createHeader } from "../services/mywalletServices";
@@ -65,7 +60,12 @@ export default function LandingPage() {
                 <NegativeEntryValue>{value.amount}</NegativeEntryValue>
               )}
               <BalanceLine>
-                SALDO <BalanceValue>{checkBalance()}</BalanceValue>
+                SALDO
+                {checkBalance() > 0 ? (
+                  <PositiveBalanceValue>{checkBalance()}</PositiveBalanceValue>
+                ) : (
+                  <NegativeBalanceValue>{checkBalance()}</NegativeBalanceValue>
+                )}
               </BalanceLine>
             </EntryLine>
           ))
@@ -198,13 +198,24 @@ const BalanceLine = styled.div`
   bottom: 85vw;
 `;
 
-const BalanceValue = styled.div`
+const PositiveBalanceValue = styled.div`
   display: flex;
   align-items: center;
   font-family: "Raleway", sans-serif;
   font-weight: 400;
   font-size: 16px;
   color: #03ac00;
+  position: fixed;
+  right: 7vw;
+`;
+
+const NegativeBalanceValue = styled.div`
+  display: flex;
+  align-items: center;
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #c70000;
   position: fixed;
   right: 7vw;
 `;

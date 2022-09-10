@@ -1,12 +1,4 @@
-import {
-  Wrapper,
-  Logo,
-  Info,
-  Bigbutton,
-  Content,
-  SpanLink,
-  PageTitle,
-} from "../styles/sharedStyles";
+import { Wrapper, Info, Bigbutton, PageTitle } from "../styles/sharedStyles";
 import { useState, useContext } from "react";
 import { creditValue, createHeader } from "../services/mywalletServices";
 import { useNavigate } from "react-router-dom";
