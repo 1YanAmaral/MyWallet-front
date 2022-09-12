@@ -8,7 +8,7 @@ import { getTransactions, createHeader } from "../services/mywalletServices";
 
 export default function LandingPage() {
   const { user } = useContext(UserContext);
-  const { token } = useContext(LoginContext);
+  const { token, setToken } = useContext(LoginContext);
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
@@ -44,7 +44,10 @@ export default function LandingPage() {
         Olá, {user.name}
         <Wrapper>
           <Link to="/">
-            <ion-icon name="log-out-outline"></ion-icon>
+            <ion-icon
+              name="log-out-outline"
+              onClick={() => setToken()}
+            ></ion-icon>
           </Link>
         </Wrapper>
       </PageTitle>
